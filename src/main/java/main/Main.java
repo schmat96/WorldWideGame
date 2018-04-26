@@ -9,12 +9,12 @@ import java.nio.file.StandardOpenOption;
 import org.slf4j.Logger;
 
 import com.sun.javafx.application.LauncherImpl;
-import controller.LoginViewVC;
+import controller.LoginViewController;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
 import model.DataBean;
-import view.ViewLogin;
+import view.LoginView;
 
 public class Main extends Application {
 	
@@ -35,11 +35,11 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		dataBean.setPrimaryStage(primaryStage);
-		LoginViewVC wwg = new LoginViewVC(dataBean);
+		LoginViewController wwg = new LoginViewController(dataBean);
 	    wwg.show(); 
 	    wwg.login("Kevin", "Welcome$18");
 	}
-	//Test
+
 	@Override
 	public void stop() throws Exception {
 	    super.stop();

@@ -1,4 +1,4 @@
-package view;
+package view.menu;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,13 +8,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-public class Header extends GridPane {
+public class HeaderView extends GridPane {
 	
 	private Label energie;
 	private Label level;
 	private Label spielerName;
 	
-	public Header() {
+	public HeaderView() {
 		super();
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setHgap(5);

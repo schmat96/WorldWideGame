@@ -1,7 +1,7 @@
 package main;
 
-import controller.LoginViewVC;
-import controller.RegisterViewVC;
+import controller.LoginViewController;
+import controller.RegisterViewViewController;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.geometry.Pos;
@@ -63,7 +63,7 @@ public class MyPreloader extends Preloader {
     }
     
     public void completed(DataBean dataBean) {
-    	LoginViewVC loginVC = new LoginViewVC(dataBean);
+    	LoginViewController loginVC = new LoginViewController(dataBean);
 		 loginVC.show();   
     }
 

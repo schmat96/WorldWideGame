@@ -1,19 +1,18 @@
-package controller;
+package controller.menu;
 
-import controller.LoginViewVC.loginListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import model.DataBean;
-import view.MainWindow;
-import view.MenuViews;
+import view.menu.HomeView;
+import view.menu.MenuViews;
 
-public abstract class MainViewController {
+public abstract class MainViewsController {
 	
 	protected DataBean dataBean;
 	
 	protected MenuViews view;
 	
-	public MainViewController(DataBean dataBean) {
+	public MainViewsController(DataBean dataBean) {
 		this.dataBean = dataBean;
 	}
 	
@@ -26,6 +25,7 @@ public abstract class MainViewController {
 	protected void addListener() {
 		view.getFooter().getUnitButton().setOnAction(new changeToUnits(dataBean));
 		view.getFooter().getHomeButton().setOnAction(new changeToHome(dataBean));
+		view.getFooter().getSummonButton().setOnAction(new changeToSummon(dataBean));
 	}
 }
 
@@ -40,7 +40,7 @@ class changeToUnits implements EventHandler<ActionEvent> {
 	}
 	
 	public void handle(ActionEvent event) {
-		UnitsVC backVC = new UnitsVC(this.dataBean);
+		UnitsViewController backVC = new UnitsViewController(this.dataBean);
 		backVC.show();   
 	}
 }
@@ -55,7 +55,22 @@ class changeToHome implements EventHandler<ActionEvent> {
 	}
 	
 	public void handle(ActionEvent event) {
-		HomeVC backVC = new HomeVC(this.dataBean);
+		HomeViewController backVC = new HomeViewController(this.dataBean);
+		backVC.show();   
+	}
+}
+
+class changeToSummon implements EventHandler<ActionEvent> {
+	
+	private DataBean dataBean;
+	
+	public changeToSummon(DataBean dataBean) {
+		super();
+		this.dataBean = dataBean;
+	}
+	
+	public void handle(ActionEvent event) {
+		HomeViewController backVC = new HomeViewController(this.dataBean);
 		backVC.show();   
 	}
 }

@@ -1,24 +1,25 @@
 package controller;
 
 
-import controller.HomeVC.backBtnEventHandler;
+import controller.menu.HomeViewController;
+import controller.menu.MainViewsController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import model.DataBean;
 import model.Spieler;
-import view.ViewLogin;
-import view.ViewRegister;
+import view.LoginView;
+import view.RegisterView;
 
-public class RegisterViewVC extends MainViewController {
+public class RegisterViewViewController {
 
-	private ViewRegister mainView;
+	private RegisterView mainView;
 	
-	
+	private DataBean dataBean;
 	private Spieler spieler;
 	
-	public RegisterViewVC(DataBean dataBean)  {
-		super(dataBean);
-		this.mainView = new ViewRegister(dataBean.getDimension());
+	public RegisterViewViewController(DataBean dataBean)  {
+		this.dataBean = dataBean;
+		this.mainView = new RegisterView(dataBean.getDimension());
 		this.addListener();
 		//this.dataBean.getGetData().closeSessionFactory();
 	}
@@ -34,7 +35,7 @@ public class RegisterViewVC extends MainViewController {
 	
 	public void register(String name, String pw) {
 		if (this.dataBean.register(name, pw)) {
-			HomeVC mainWindow = new HomeVC(dataBean);
+			HomeViewController mainWindow = new HomeViewController(dataBean);
 			mainWindow.show();   
 		} else {
 			
@@ -54,7 +55,7 @@ public class RegisterViewVC extends MainViewController {
 	
 	class backListener implements EventHandler<ActionEvent> {
 		public void handle(ActionEvent event) {
-			 LoginViewVC backVC = new LoginViewVC(dataBean);
+			 LoginViewController backVC = new LoginViewController(dataBean);
 			 backVC.show();   
 		}
 	}

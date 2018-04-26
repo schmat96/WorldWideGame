@@ -1,4 +1,4 @@
-package view;
+package view.menu;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -6,14 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class Footer extends GridPane {
+public class FooterView extends GridPane {
 	
-	private HBox[] buttons = new HBox[3];
+	private HBox[] buttons = new HBox[4];
 	private Button unitButton;
 	private Button specialButton;
+	private Button summonButton;
 	private Button homeButton;
 
-	public Footer() {
+	public FooterView() {
 		super();
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setHgap(10);
@@ -29,9 +30,13 @@ public class Footer extends GridPane {
 		buttons[1] = createButton(unitButton);
 		this.add(buttons[1], 1, 0);
 		
-		specialButton = new Button("Special");
-		buttons[2] = createButton(specialButton);
+		summonButton = new Button("Summon");
+		buttons[2] = createButton(summonButton);
 		this.add(buttons[2], 2, 0);
+		
+		specialButton = new Button("Special");
+		buttons[3] = createButton(specialButton);
+		this.add(buttons[3], 3, 0);
 	}
 
 	private HBox createButton(Button b) {
@@ -52,6 +57,10 @@ public class Footer extends GridPane {
 
 	public Button getSpecialButton() {
 		return specialButton;
+	}
+	
+	public Button getSummonButton() {
+		return this.summonButton;
 	}
 
 	public Button getHomeButton() {

@@ -8,7 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import view.UnitsView;
+import view.menu.UnitsView;
 
 
 

@@ -24,23 +24,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.menu.FooterView;
+import view.menu.HeaderView;
 
 
-public class ViewRegister {
+public class LoginView {
 	
 	
 	private PasswordField pwBox;
 	
 	private Scene scene;
 	private TextField userTextField;
-	private Button btnBack;
-	private Button btnRegister;
+	private Button btnLogin;
+	private Button register;
 
-	public ViewRegister(Dimension dim) {
+	public LoginView(Dimension dim) {
 		
-		Header header = new Header();
-		Footer footer = new Footer();
-		
+		HeaderView header = new HeaderView();
+		FooterView footer = new FooterView();
 		
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
@@ -56,7 +57,7 @@ public class ViewRegister {
 		
 		hauptGrid.setStyle("-fx-background-color: #CCC011;");
 		
-	     scene = new Scene(hauptGrid, dim.getWidth(), dim.getHeight());
+	      scene = new Scene(hauptGrid, dim.getWidth(), dim.getHeight());
 
 		Label userName = new Label("User Name:");
 		grid.add(userName, 0, 1);
@@ -70,18 +71,15 @@ public class ViewRegister {
 		pwBox = new PasswordField();
 		grid.add(pwBox, 1, 2);
 		
-		btnRegister = new Button("Register");
+		btnLogin = new Button("Sign in");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-		hbBtn.getChildren().add(btnRegister);
-
+		hbBtn.getChildren().add(btnLogin);
 		
-		btnBack = new Button("Zurück");
 		
+		register = new Button("Register");
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-		hbBtn.getChildren().add(btnBack);
-
-		
+		hbBtn.getChildren().add(register);
 		grid.add(hbBtn, 1, 4);
 		
         
@@ -97,13 +95,13 @@ public class ViewRegister {
 		Platform.exit();
 	}
 	
-
-	public Button getBtnBack() {
-		return btnBack;
+	
+	public Button getBtnLogin() {
+		return btnLogin;
 	}
 
-	public Button getBtnRegister() {
-		return btnRegister;
+	public Button getRegister() {
+		return register;
 	}
 
 	public PasswordField getPwBox() {

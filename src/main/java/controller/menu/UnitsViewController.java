@@ -1,4 +1,4 @@
-package controller;
+package controller.menu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,14 +7,14 @@ import java.util.Set;
 import model.Charakter;
 import model.DataBean;
 import model.Spieler;
-import view.MainWindow;
-import view.UnitsView;
+import view.menu.HomeView;
+import view.menu.UnitsView;
 
-public class UnitsVC extends MainViewController implements Runnable {
+public class UnitsViewController extends MainViewsController implements Runnable {
 
 	private boolean running = false;
 	
-	public UnitsVC(DataBean dataBean) {
+	public UnitsViewController(DataBean dataBean) {
 		super(dataBean);
 		view = new UnitsView(dataBean.getDimension());
 		addListener();

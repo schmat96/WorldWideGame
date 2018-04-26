@@ -1,22 +1,23 @@
-package controller;
+package controller.menu;
 
+import controller.LoginViewController;
 import exceptions.NotEnoughMoney;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import model.CharakterDAO;
 import model.DataBean;
-import view.MainWindow;
-import view.MenuViews;
+import view.menu.HomeView;
+import view.menu.MenuViews;
 
-public class HomeVC extends MainViewController {
+public class HomeViewController extends MainViewsController {
     
 
 	   
 	    
 	    
-	   public HomeVC(DataBean dataBean) {
+	   public HomeViewController(DataBean dataBean) {
 		  super(dataBean);
-	      super.view = new MainWindow(dataBean.getDimension());
+	      super.view = new HomeView(dataBean.getDimension());
 	      addListener();
 	      
 	   }
@@ -24,9 +25,9 @@ public class HomeVC extends MainViewController {
 		@Override
 		protected void addListener() {
 			super.addListener();
-			 ((MainWindow) view).getAddMoneyBtn().setOnAction(new addMoney());   
-		      ((MainWindow) view).getRemoveMoneyBtn().setOnAction(new removeMoney());   
-		      ((MainWindow) view).getBackBtn().setOnAction(new backBtnEventHandler());   
+			 ((HomeView) view).getAddMoneyBtn().setOnAction(new addMoney());   
+		      ((HomeView) view).getRemoveMoneyBtn().setOnAction(new removeMoney());   
+		      ((HomeView) view).getBackBtn().setOnAction(new backBtnEventHandler());   
 			
 		}
 	    
@@ -39,7 +40,7 @@ public class HomeVC extends MainViewController {
 	    
 	   class backBtnEventHandler implements EventHandler<ActionEvent>{
 	      public void handle(ActionEvent e) {   
-	    	  LoginViewVC eingabeVC = new LoginViewVC(dataBean);
+	    	  LoginViewController eingabeVC = new LoginViewController(dataBean);
 	          eingabeVC.show();   
 	      }
 	   }

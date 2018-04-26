@@ -1,4 +1,4 @@
-package view;
+package view.menu;
 
 import java.awt.Dimension;
 
@@ -13,8 +13,8 @@ import model.Spieler;
 
 public abstract class MenuViews {
 
-	protected Header header;
-	protected Footer footer;
+	protected HeaderView header;
+	protected FooterView footer;
 	protected BorderPane hauptGrid;
 	
 	   protected GridPane grid;
@@ -23,8 +23,8 @@ public abstract class MenuViews {
 	   protected Button backBtn;
 	
 	protected MenuViews(Dimension dim) {
-	   	header = new Header();
-	   	footer = new Footer();
+	   	header = new HeaderView();
+	   	footer = new FooterView();
 		
 		 
 		
@@ -53,7 +53,7 @@ public abstract class MenuViews {
 			this.header.spielerName(spieler.getName());
 		}
 	   
-		public Header getHeader() {
+		public HeaderView getHeader() {
 			return this.header;
 		}
 		
@@ -61,7 +61,7 @@ public abstract class MenuViews {
 		      return backBtn;
 		   }
 		 
-		 public Footer getFooter() {
+		 public FooterView getFooter() {
 			 return this.footer;
 		 }
 	 
