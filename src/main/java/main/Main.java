@@ -39,7 +39,7 @@ public class Main extends Application {
 	    wwg.show(); 
 	    wwg.login("Kevin", "Welcome$18");
 	}
-	
+	//Test
 	@Override
 	public void stop() throws Exception {
 	    super.stop();
