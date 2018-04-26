@@ -1,28 +1,11 @@
 package model;
 
-import com.sun.javafx.application.LauncherImpl;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.logging.Handler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.collection.internal.PersistentSet;
-
 import org.hibernate.service.ServiceRegistry;
-import org.jboss.logging.Logger.Level;
-
-import exceptions.NotEnoughMoney;
-import javafx.application.Preloader;
-import main.Main;
-import main.MyPreloader;
 
 
 

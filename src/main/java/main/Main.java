@@ -1,20 +1,12 @@
 package main;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
-import org.slf4j.Logger;
-
 import com.sun.javafx.application.LauncherImpl;
+
 import controller.LoginViewController;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
 import model.DataBean;
-import view.LoginView;
 
 public class Main extends Application {
 	

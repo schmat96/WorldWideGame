@@ -1,7 +1,6 @@
 package main;
 
 import controller.LoginViewController;
-import controller.RegisterViewViewController;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.geometry.Pos;

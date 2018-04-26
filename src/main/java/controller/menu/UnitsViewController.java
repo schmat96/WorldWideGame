@@ -2,18 +2,13 @@ package controller.menu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 import model.Charakter;
 import model.DataBean;
-import model.Spieler;
-import view.menu.HomeView;
 import view.menu.UnitsView;
 
 public class UnitsViewController extends MainViewsController implements Runnable {
 
-	private boolean running = false;
-	
 	public UnitsViewController(DataBean dataBean) {
 		super(dataBean);
 		view = new UnitsView(dataBean.getDimension());
@@ -25,7 +20,7 @@ public class UnitsViewController extends MainViewsController implements Runnable
 	protected void addListener() {
 		super.addListener();
 	}
-	
+
 	private void displayUnits() {
 		while (dataBean.loading()) {
 			dataBean.loadCharakters();
@@ -41,9 +36,7 @@ public class UnitsViewController extends MainViewsController implements Runnable
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
-	}
-	
 
+	}
 
 }

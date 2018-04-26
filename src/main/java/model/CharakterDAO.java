@@ -8,8 +8,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import view.menu.UnitsView;
-
 
 
 public class CharakterDAO {
