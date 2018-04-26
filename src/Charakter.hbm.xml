@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="myPackage.Charakter" table="CHARAKTER">
+    <id name="id" column="ID" type="integer">
+      <generator class="native"/>
+    </id>
+    <property name="name"  column="NAME"  type="string" not-null="true"/>
+    <set name="besitzt" table="BESITZT" lazy="true">
+      <key column="CHARAKTER_ID"/>
+      <many-to-many class="myPackage.Spieler" column="SPIELER_ID"/>
+    </set>
+    <set name="charAbility" table="CHAR_ABILITY" cascade="all" lazy="true">
+      <key column="CHARAKTER_ID"/>
+      <many-to-many class="mypackage.Ability"/>
+    </set>
+  </class>
+</hibernate-mapping>

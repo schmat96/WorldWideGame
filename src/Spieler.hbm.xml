@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="myPackage.Spieler" table="SPIELER">
+    <id name="id" column="ID" type="integer">
+      <generator class="native"/>
+    </id>
+    <property name="name"  column="NAME"  type="string" not-null="true"/>
+    <property name="passwort"   column="PASSWORT"   type="string" not-null="true"/>
+    <property name="geld"   column="GELD"   type="integer"/>
+    <property name="exp"   column="EXPERIENCE"   type="integer"/>
+    <set name="besitzt" table="BESITZT" lazy="true">
+      <key column="KUNDE_ID"/>
+      <many-to-many class="myPackage.Charakter" column="CHARAKTER_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>
