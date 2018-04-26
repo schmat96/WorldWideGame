@@ -31,6 +31,7 @@ public class HibernateFactory {
 		//addClass(Employee1.class) will look for resource
 		// com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
 		configuration.addAnnotatedClass(Spieler.class);
+		configuration.addAnnotatedClass(Universum.class);
 		configuration.addAnnotatedClass(Charakter.class);
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();

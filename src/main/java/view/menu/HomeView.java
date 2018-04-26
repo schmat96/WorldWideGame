@@ -52,4 +52,9 @@ public class HomeView extends MenuViews {
 		return addMoneyBtn;
 	}
 
+	@Override
+	public void setFocusOfButton() {
+		super.setFocusOfButton(super.getFooter().getHomeButton());
+	}
+
 }

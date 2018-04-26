@@ -22,14 +22,18 @@ public class UnitsView extends MenuViews {
 		scenetitle = new Text("Deine Units");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		super.grid.add(scenetitle, 0, 0);
-
 		super.scene = new Scene(hauptGrid, dim.getWidth(), dim.getHeight());
 	}
 
 	public void addUnit(Charakter charakter) {
-		Label l = new Label(charakter.getName());
+		Label l = new Label(charakter.getName() + " from "+charakter.getUniversum().getName());
 		super.grid.add(l, 0, rowIndex);
 		rowIndex++;
+	}
+
+	@Override
+	public void setFocusOfButton() {
+		super.setFocusOfButton(super.getFooter().getUnitButton());
 	}
 
 }

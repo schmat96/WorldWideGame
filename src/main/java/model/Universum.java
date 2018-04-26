@@ -8,32 +8,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="charakter", 
-	   uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
-public class Charakter {
+@Table(name="universum", 
+	   uniqueConstraints={@UniqueConstraint(columnNames={"id_universum"})})
+public class Universum {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID", nullable=false, unique=true, length=11)
+	@Column(name="id_universum", nullable=false, unique=true, length=11)
 	private int id;
 	
 	@Column(name="NAME", length=20, nullable=true)
 	private String name;
 	
-	@ManyToMany(mappedBy = "charakters")
-    private Set<Spieler> spieler = new HashSet<>();
-	
-	@ManyToOne
-    @JoinColumn(name="universum_id", nullable=false)
-    private Universum universum;
-	
+	@OneToMany(mappedBy = "universum")
+    private Set<Charakter> charakters = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -47,8 +40,9 @@ public class Charakter {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Universum getUniversum() {
-		return universum;
+	
+	public Set<Charakter> getCharakters() {
+		return this.charakters;
 	}
 
 }

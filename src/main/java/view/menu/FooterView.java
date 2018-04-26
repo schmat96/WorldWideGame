@@ -13,6 +13,7 @@ public class FooterView extends GridPane {
 	private Button specialButton;
 	private Button summonButton;
 	private Button homeButton;
+	
 
 	public FooterView() {
 		super();
@@ -37,6 +38,8 @@ public class FooterView extends GridPane {
 		specialButton = new Button("Special");
 		buttons[3] = createButton(specialButton);
 		this.add(buttons[3], 3, 0);
+		
+		resetButtonBackgrounds();
 	}
 
 	private HBox createButton(Button b) {
@@ -65,6 +68,20 @@ public class FooterView extends GridPane {
 
 	public Button getHomeButton() {
 		return homeButton;
+	}
+
+	public void setFocus(Button button) {
+		resetButtonBackgrounds();
+		button.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR_FOCUSED);
+		button.requestFocus();
+	}
+
+	private void resetButtonBackgrounds() {
+		unitButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
+		specialButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
+		summonButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
+		homeButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
+		
 	}
 
 }

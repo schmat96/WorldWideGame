@@ -11,7 +11,9 @@ public class DataBean {
 	private Stage primaryStage = null;
 	private SpielerDAO spielerDAO;   
 	private CharakterDAO charakterDAO;
+	private UniversumDAO universumDAO;
 	private ArrayList<Charakter> loadedCharakters;
+	private ArrayList<Universum> loadedUniversums;
 	private Spieler loggedInSpieler = null;  
 	
 	private final Dimension DIMENSION;
@@ -85,17 +87,43 @@ public class DataBean {
 			charakterDAO = new CharakterDAO();
 		}
 		loadedCharakters = new ArrayList<Charakter>();
-		this.loading = true;
 		this.loading = charakterDAO.getCharaktersOfCertainPlayer(loggedInSpieler, loadedCharakters);
 		
 	}
 
 	public ArrayList<Charakter> getLoadedCharakters() {
+		this.loading = true;
 		return loadedCharakters;
 	}
+	
+	public void loadUniversums() {
+		if (universumDAO==null) {
+			universumDAO = new UniversumDAO();
+		}
+		loadedUniversums = new ArrayList<Universum>();
+		this.loading = universumDAO.getUniversums(loadedUniversums);
+	}
+
+	public ArrayList<Universum> getLoadedUniversums() {
+		this.loading = true;
+		return loadedUniversums;
+	}
+	
 
 	public boolean loading() {
 		return this.loading;
 	}
-
+	/**
+	public void summonUnit(Universum universum) {
+		if (universumDAO==null) {
+			universumDAO = new UniversumDAO();
+		}
+		universumDAO.getRandomUnitFromUniversum(universum);
+		this.loggedInSpieler.getCharakters().add(charakter);
+		if (this.spielerDAO==null) {
+			spielerDAO = new SpielerDAO();
+		}
+		spielerDAO.merge(loggedInSpieler);
+	}
+	**/
 	}
