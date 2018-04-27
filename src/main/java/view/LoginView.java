@@ -32,7 +32,7 @@ public class LoginView {
 	public LoginView(Dimension dim) {
 		
 		HeaderView header = new HeaderView();
-		FooterView footer = new FooterView();
+		
 		
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
@@ -44,7 +44,6 @@ public class LoginView {
 
 		hauptGrid.setCenter(grid);
 		hauptGrid.setTop(header);
-		hauptGrid.setBottom(footer);
 		
 		hauptGrid.setStyle("-fx-background-color: #CCC011;");
 		

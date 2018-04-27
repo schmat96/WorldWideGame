@@ -32,7 +32,6 @@ public class RegisterView {
 	public RegisterView(Dimension dim) {
 		
 		HeaderView header = new HeaderView();
-		FooterView footer = new FooterView();
 		
 		
 		GridPane grid = new GridPane();
@@ -45,7 +44,6 @@ public class RegisterView {
 
 		hauptGrid.setCenter(grid);
 		hauptGrid.setTop(header);
-		hauptGrid.setBottom(footer);
 		
 		hauptGrid.setStyle("-fx-background-color: #CCC011;");
 		

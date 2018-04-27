@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
@@ -45,7 +47,7 @@ public class UniversumDAO {
 		return false;
 
 	}
-	/**
+	
 	public Charakter getRandomUnitFromUniversum(Universum universum) {
 		Session sess = null;
 		Transaction trx = null;
@@ -54,17 +56,13 @@ public class UniversumDAO {
 			sess = HibernateFactory.getSessionFactory().openSession();
 			trx = sess.beginTransaction();
 
-			result = (ArrayList<Universum>) sess.createQuery("from Universum").list();
+			Universum uni = (Universum) sess.get(universum.getClass(), universum.getId());
 			
-			Set<Charakter> charakters = universum.getCharakters();
+			Set<Charakter> allCharakters = uni.getCharakters();
+			ArrayList<Charakter> charakters = new ArrayList<Charakter>(allCharakters);
+			
 			Random rng = new Random();
-			charakters.iterator()
-			
-			Iterator<Universum> iter = result.iterator();
-			while (iter.hasNext()) {
-				Universum universum = iter.next();
-				loadedUniversums.add(universum);
-			}
+			result = charakters.get(rng.nextInt(charakters.size()));
 
 
 		} catch (HibernateException ex) {
@@ -85,6 +83,6 @@ public class UniversumDAO {
 		return result;
 		
 	}
-	**/
+	
 
 }

@@ -2,6 +2,7 @@ package main;
 
 import com.sun.javafx.application.LauncherImpl;
 
+import constants.LayoutConstants;
 import controller.LoginViewController;
 import javafx.application.Application;
 import javafx.application.Preloader;
@@ -15,12 +16,9 @@ public class Main extends Application {
 	private int progressID = 1;
 	
 	private RandomProgress randomProgress;
-	
-	static final int WIDTH = 320;
-    static final int HEIGHT = 568;
+
 		
 	public static void main(String[] args) {
-		
 		LauncherImpl.launchApplication(Main.class, MyPreloader.class, args);
 	}
 
@@ -41,7 +39,7 @@ public class Main extends Application {
 	public void init() throws Exception {
 		randomProgress = new RandomProgress(this);
 		randomProgress.start();
-		dataBean = new DataBean(this, WIDTH, HEIGHT);
+		dataBean = new DataBean(this);
 		randomProgress.terminate();
 		
     }

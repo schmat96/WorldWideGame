@@ -1,5 +1,6 @@
 package controller;
 
+import constants.LayoutConstants;
 import controller.menu.HomeViewController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +15,7 @@ public class LoginViewController {
 
 	public LoginViewController(DataBean dataBean) {
 		this.dataBean = dataBean;
-		this.mainView = new LoginView(dataBean.getDimension());
+		this.mainView = new LoginView(LayoutConstants.DIMENSION);
 		this.addListener();
 
 		// this.dataBean.getGetData().closeSessionFactory();

@@ -3,15 +3,21 @@ package controller.menu;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import constants.LayoutConstants;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import model.Charakter;
 import model.DataBean;
+import view.menu.MenuViews;
 import view.menu.UnitsView;
 
-public class UnitsViewController extends MainViewsController implements Runnable {
+public class UnitsViewController extends MainViewsController {
 
 	public UnitsViewController(DataBean dataBean) {
 		super(dataBean);
-		view = new UnitsView(dataBean.getDimension());
+		view = new UnitsView(LayoutConstants.DIMENSION);
 		addListener();
 		displayUnits();
 	}
@@ -29,14 +35,60 @@ public class UnitsViewController extends MainViewsController implements Runnable
 		Iterator<Charakter> iter = characters.iterator();
 		while (iter.hasNext()) {
 			Charakter current = iter.next();
-			((UnitsView) view).addUnit(current);
+			VBox unit = ((UnitsView) view).addUnit(current);
+			unit.setOnMousePressed(new changeToUnit(dataBean, current));
+			unit.setOnMouseEntered(new changeFocus(unit));
+			unit.setOnMouseExited(new removeFocus(unit));
 		}
+	}
+}
+
+class changeToUnit implements EventHandler<MouseEvent> {
+
+	private DataBean dataBean;
+	private Charakter current;
+
+	public changeToUnit(DataBean dataBean, Charakter current) {
+		super();
+		this.dataBean = dataBean;
+		this.current = current;
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void handle(MouseEvent event) {
+		UnitViewController unitsView = new UnitViewController(this.dataBean, current);
+		unitsView.show();
+	}
+}
 
+class changeFocus implements EventHandler<MouseEvent> {
+
+	private DataBean dataBean;
+	private VBox current;
+
+	public changeFocus(VBox current) {
+		super();
+		this.current = current;
 	}
 
+	@Override
+	public void handle(MouseEvent event) {
+		this.current.setStyle(LayoutConstants.STYLE_ELEMENTS_ON_FOCUSED);
+	}
 }
+
+class removeFocus implements EventHandler<MouseEvent> {
+
+	private VBox current;
+
+	public removeFocus(VBox current) {
+		super();
+		this.current = current;
+	}
+
+	@Override
+	public void handle(MouseEvent event) {
+		this.current.setStyle(LayoutConstants.STYLE_ELEMENTS);
+	}
+}
+

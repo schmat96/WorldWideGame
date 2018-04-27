@@ -21,9 +21,7 @@ public abstract class MenuViews {
 	protected Scene scene;
 
 	protected Button backBtn;
-	
-	static final String BUTTON_BACKGROUND_COLOR = "-fx-border-color: #000000; -fx-border-width: 1px";
-	static final String BUTTON_BACKGROUND_COLOR_FOCUSED = "-fx-border-color: #0000DD; -fx-border-width: 1px";
+
 
 	protected MenuViews(Dimension dim) {
 		header = new HeaderView();

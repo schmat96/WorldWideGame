@@ -1,5 +1,6 @@
 package main;
 
+import constants.LayoutConstants;
 import controller.LoginViewController;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -46,7 +47,7 @@ public class MyPreloader extends Preloader {
             VBox root = new VBox(title, progress, pb);
             root.setAlignment(Pos.CENTER);
             
-            scene = new Scene(root, Main.WIDTH, Main.HEIGHT);
+            scene = new Scene(root, LayoutConstants.WIDTH, LayoutConstants.HEIGHT);
         });
     }
 

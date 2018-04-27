@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -155,5 +156,75 @@ public class SpielerDAO {
 			}
 		}
 		return this.generatePlayer(name, pw, 0, 100);
+	}
+	
+	public boolean playerOwnsCharakter(Spieler spieler, Charakter charakter) {
+		Session sess = null;
+		Transaction trx = null;
+		boolean owns = false;
+		try {
+			sess = HibernateFactory.getSessionFactory().openSession();
+			trx = sess.beginTransaction();
+
+			Spieler sp = (Spieler) sess.get(spieler.getClass(), spieler.getId());
+
+			Set<Charakter> charakters = sp.getCharakters();
+			Iterator<Charakter> iter = charakters.iterator();
+			while (iter.hasNext()) {
+				if (charakter.getName().equals(iter.next().getName())) {
+					return true;
+				}
+			}
+			
+			trx.commit();
+
+		} catch (HibernateException ex) {
+			if (trx != null)
+				try {
+					trx.rollback();
+				} catch (HibernateException exRb) {
+				}
+			throw new RuntimeException(ex.getMessage());
+		} finally {
+			try {
+				if (sess != null)
+					sess.close();
+			} catch (Exception exCl) {
+			}
+		}
+		return owns;
+	}
+
+	public void addCharakter(Spieler loggedInSpieler, Charakter summonedCharakter) {
+		Session sess = null;
+		Transaction trx = null;
+
+		try {
+			sess = HibernateFactory.getSessionFactory().openSession();
+			trx = sess.beginTransaction();
+
+			Spieler sp = (Spieler) sess.get(loggedInSpieler.getClass(), loggedInSpieler.getId());
+
+			sp.getCharakters().add(summonedCharakter);
+
+			
+			sess.merge(sp);
+			trx.commit();
+
+		} catch (HibernateException ex) {
+			if (trx != null)
+				try {
+					trx.rollback();
+				} catch (HibernateException exRb) {
+				}
+			throw new RuntimeException(ex.getMessage());
+		} finally {
+			try {
+				if (sess != null)
+					sess.close();
+			} catch (Exception exCl) {
+			}
+		}
+		
 	}
 }

@@ -1,5 +1,6 @@
 package view.menu;
 
+import constants.LayoutConstants;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -72,15 +73,15 @@ public class FooterView extends GridPane {
 
 	public void setFocus(Button button) {
 		resetButtonBackgrounds();
-		button.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR_FOCUSED);
+		button.setStyle(LayoutConstants.STYLE_ELEMENTS_ON_FOCUSED);
 		button.requestFocus();
 	}
 
 	private void resetButtonBackgrounds() {
-		unitButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
-		specialButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
-		summonButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
-		homeButton.setStyle(MenuViews.BUTTON_BACKGROUND_COLOR);
+		unitButton.setStyle(LayoutConstants.STYLE_ELEMENTS);
+		specialButton.setStyle(LayoutConstants.STYLE_ELEMENTS);
+		summonButton.setStyle(LayoutConstants.STYLE_ELEMENTS);
+		homeButton.setStyle(LayoutConstants.STYLE_ELEMENTS);
 		
 	}
 

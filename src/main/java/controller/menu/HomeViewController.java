@@ -1,5 +1,6 @@
 package controller.menu;
 
+import constants.LayoutConstants;
 import controller.LoginViewController;
 import exceptions.NotEnoughMoney;
 import javafx.event.ActionEvent;
@@ -11,7 +12,7 @@ public class HomeViewController extends MainViewsController {
 
 	public HomeViewController(DataBean dataBean) {
 		super(dataBean);
-		super.view = new HomeView(dataBean.getDimension());
+		super.view = new HomeView(LayoutConstants.DIMENSION);
 		addListener();
 
 	}

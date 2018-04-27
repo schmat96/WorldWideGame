@@ -16,13 +16,11 @@ public class DataBean {
 	private ArrayList<Universum> loadedUniversums;
 	private Spieler loggedInSpieler = null;  
 	
-	private final Dimension DIMENSION;
 	private boolean loading = true;
 	    
-	   public DataBean(Main main, int x, int y) { 
+	   public DataBean(Main main) { 
 		   HibernateFactory.getSessionFactory();
 		   spielerDAO = new SpielerDAO(); 
-		   DIMENSION = new Dimension(x,y);
 	   }
 	 
 	   public Stage getPrimaryStage() {
@@ -77,10 +75,6 @@ public class DataBean {
 		 this.primaryStage = primaryStage2;
 		
 	}
-	
-	public Dimension getDimension() {
-		return this.DIMENSION;
-	}
 
 	public void loadCharakters() {
 		if (charakterDAO==null) {
@@ -113,17 +107,24 @@ public class DataBean {
 	public boolean loading() {
 		return this.loading;
 	}
-	/**
-	public void summonUnit(Universum universum) {
+	
+	public Charakter summonUnit(Universum universum) {
 		if (universumDAO==null) {
 			universumDAO = new UniversumDAO();
 		}
-		universumDAO.getRandomUnitFromUniversum(universum);
-		this.loggedInSpieler.getCharakters().add(charakter);
+		Charakter summonedCharakter = universumDAO.getRandomUnitFromUniversum(universum);
 		if (this.spielerDAO==null) {
 			spielerDAO = new SpielerDAO();
 		}
-		spielerDAO.merge(loggedInSpieler);
+		if (spielerDAO.playerOwnsCharakter(loggedInSpieler, summonedCharakter)) {
+			System.out.println("Doppelte Unit!");
+			return null;
+		} else {
+			spielerDAO.addCharakter(loggedInSpieler, summonedCharakter);
+			System.out.println(summonedCharakter.getName()+" erhalten!");
+		}
+		
+		return summonedCharakter;
 	}
-	**/
+	
 	}

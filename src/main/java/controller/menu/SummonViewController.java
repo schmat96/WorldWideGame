@@ -3,6 +3,7 @@ package controller.menu;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import constants.LayoutConstants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -17,7 +18,7 @@ public class SummonViewController extends MainViewsController {
 
 	public SummonViewController(DataBean dataBean) {
 		super(dataBean);
-		super.view = new SummonView(dataBean.getDimension());
+		super.view = new SummonView(LayoutConstants.DIMENSION);
 		addListener();
 		displayUniversums();
 	}
@@ -57,8 +58,14 @@ public class SummonViewController extends MainViewsController {
 		}
 
 		public void handle(ActionEvent event) {
-			System.out.println("Beschwören von: "+this.universum.getName());
-			//this.dataBean.summonUnit(this.universum);
+			Charakter character = dataBean.summonUnit(this.universum);
+			if (character == null) {
+				
+			} else {
+				UnitViewController unitsView = new UnitViewController(this.dataBean, character);
+				unitsView.show();
+			}
+			
 		}
 	}
 
