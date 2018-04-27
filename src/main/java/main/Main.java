@@ -12,7 +12,7 @@ import model.DataBean;
 public class Main extends Application {
 	
 	private DataBean dataBean;
-	private int COUNT_LIMIT = 3;
+	private int COUNT_LIMIT = 7;
 	private int progressID = 1;
 	
 	private RandomProgress randomProgress;
@@ -41,11 +41,11 @@ public class Main extends Application {
 		randomProgress.start();
 		dataBean = new DataBean(this);
 		randomProgress.terminate();
-		
     }
 	
 
-	public void notifyProgress() {
+	public void notifyProgress(String progressMessage) {
+		
 		double progress = (100 * progressID) / COUNT_LIMIT;
         LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 		progressID++;
@@ -53,8 +53,13 @@ public class Main extends Application {
 	}
 
 	public void notifyFromRandomProgress() {
-		COUNT_LIMIT++;
-		notifyProgress();
+		
+		if (100/COUNT_LIMIT*progressID<100/COUNT_LIMIT*(progressID+1)) {
+			COUNT_LIMIT++;
+			notifyProgress("");
+		}
+		
+		
 	}
 }
 

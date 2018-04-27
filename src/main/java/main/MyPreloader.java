@@ -1,6 +1,10 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import constants.LayoutConstants;
+import constants.LoadingMessagesConstants;
 import controller.LoginViewController;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -20,11 +24,17 @@ public class MyPreloader extends Preloader {
     private Scene scene;
 
     private Label progress;
+    private Label progressMessage;
     private ProgressBar pb;
+    
+    private int progressMessageCount = 0;
+    
+    private ArrayList<String> progressMessages = LoadingMessagesConstants.LoadingMessagesConstants();
+    Random rng = new Random();
     
 
     public MyPreloader() {
-        // Constructor is called before everything.
+
        
     }
 
@@ -39,21 +49,32 @@ public class MyPreloader extends Preloader {
     	
     	
         Platform.runLater(() -> {
-            Label title = new Label("World Wide Game!\nLoading, please wait...");
+            Label title = new Label("World Wide Game!");
             title.setTextAlignment(TextAlignment.CENTER);
             progress = new Label("0%");
+            progressMessage = new Label(getRandomMessage());
             pb = new ProgressBar(0.0);
             pb.setMinSize(300, 50);
-            VBox root = new VBox(title, progress, pb);
+            VBox root = new VBox(title, progress, progressMessage, pb);
             root.setAlignment(Pos.CENTER);
             
             scene = new Scene(root, LayoutConstants.WIDTH, LayoutConstants.HEIGHT);
         });
     }
 
-    @Override
+    private String getRandomMessage() {
+    	if (progressMessages.size()==0) {
+    		progressMessages = LoadingMessagesConstants.LoadingMessagesConstants();
+    	}
+    	String msg = progressMessages.remove(rng.nextInt(progressMessages.size()));
+    	if (msg == null) {
+    		msg = "Keine Ladenachricht gefunden!";
+    	}
+		return msg;
+	}
+
+	@Override
     public void start(Stage primaryStage) throws Exception {
-        
 
         this.preloaderStage = primaryStage;
 
@@ -64,7 +85,7 @@ public class MyPreloader extends Preloader {
     
     public void completed(DataBean dataBean) {
     	LoginViewController loginVC = new LoginViewController(dataBean);
-		 loginVC.show();   
+		loginVC.show();   
     }
 
     @Override
@@ -73,6 +94,11 @@ public class MyPreloader extends Preloader {
         if (info instanceof ProgressNotification) {
             progress.setText(((ProgressNotification) info).getProgress() + "%");
             pb.setProgress(((ProgressNotification) info).getProgress()/100);
+            if (progressMessageCount%5==0) {
+            	 progressMessage.setText(getRandomMessage());
+            }
+            progressMessageCount++;
+           
         }
     }
 

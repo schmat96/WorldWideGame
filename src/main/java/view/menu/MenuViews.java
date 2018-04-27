@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Spieler;
@@ -40,7 +41,7 @@ public abstract class MenuViews {
 		hauptGrid.setTop(header);
 		setFocusOfButton();
 	}
-
+	
 	public void show(Stage stage) {
 		stage.setTitle("World Wide Game - Main");
 		stage.setScene(scene);

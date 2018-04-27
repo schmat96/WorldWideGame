@@ -9,7 +9,11 @@ import javafx.scene.layout.HBox;
 
 public class FooterView extends GridPane {
 	
-	private HBox[] buttons = new HBox[4];
+	
+	private final int BUTTON_ANZAHL = 4;
+	private final int BUTTON_MARGIN = 10;
+	private final int BUTTON_WIDTH = ((LayoutConstants.WIDTH-100)/BUTTON_ANZAHL);
+	private HBox[] buttons = new HBox[BUTTON_ANZAHL];
 	private Button unitButton;
 	private Button specialButton;
 	private Button summonButton;
@@ -44,8 +48,9 @@ public class FooterView extends GridPane {
 	}
 
 	private HBox createButton(Button b) {
-
-		HBox hbBtn1 = new HBox(10);
+		b.setMinWidth(BUTTON_WIDTH);
+		HBox hbBtn1 = new HBox(BUTTON_MARGIN);
+		
 		hbBtn1.setAlignment(Pos.BOTTOM_LEFT);
 		hbBtn1.getChildren().add(b);
 		return hbBtn1;

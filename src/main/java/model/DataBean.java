@@ -19,7 +19,7 @@ public class DataBean {
 	private boolean loading = true;
 	    
 	   public DataBean(Main main) { 
-		   HibernateFactory.getSessionFactory();
+		   HibernateFactory.getSessionFactory(main);
 		   spielerDAO = new SpielerDAO(); 
 	   }
 	 

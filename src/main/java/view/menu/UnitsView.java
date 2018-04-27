@@ -26,17 +26,22 @@ public class UnitsView extends MenuViews {
 	private int rowIndex = 1;
 	private int columnIndex = 0;
 	
+	private FlowPane grid;
+	
 	private final int UNITS_IN_ROW = 3;
+	
+
 
 	private Text scenetitle;
 
 	public UnitsView(Dimension dim) {
-
 		super(dim);
-		//scenetitle = new Text("Deine Units");
-		//scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-		//super.grid.add(scenetitle, 0, 0);
+		grid = new FlowPane();
+		hauptGrid.setCenter(grid);
+		grid.setAlignment(Pos.CENTER);
+		
 		super.scene = new Scene(hauptGrid, dim.getWidth(), dim.getHeight());
+		
 	}
 
 	public VBox addUnit(Charakter charakter) {
@@ -46,21 +51,16 @@ public class UnitsView extends MenuViews {
 		canvas.setAlignment(Pos.CENTER);
 		canvas.setStyle(LayoutConstants.STYLE_ELEMENTS);
 	    Circle circle = new Circle(20);
-
+	    
 		Label name = new Label(charakter.getName());
 		Label universum = new Label(charakter.getUniversum().getName());
 
 		canvas.getChildren().add(circle);
 		canvas.getChildren().add(name);
 		canvas.getChildren().add(universum);
-
-		super.grid.add(canvas, columnIndex, rowIndex);
-		columnIndex++;
-		if (columnIndex==UNITS_IN_ROW) {
-			rowIndex++;
-			columnIndex=0;
-		}
+		canvas.setMinWidth((LayoutConstants.WIDTH-(UNITS_IN_ROW*25))/UNITS_IN_ROW);
 		
+		grid.getChildren().add(canvas);
 		return canvas;
 	}
 
