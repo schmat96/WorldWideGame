@@ -8,8 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.Charakter;
 import model.DataBean;
+import model.unit.Charakter;
 import view.menu.MenuViews;
 import view.menu.UnitsView;
 

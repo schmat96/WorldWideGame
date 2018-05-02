@@ -19,7 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import model.Charakter;
+import model.unit.Charakter;
 
 public class UnitsView extends MenuViews {
 

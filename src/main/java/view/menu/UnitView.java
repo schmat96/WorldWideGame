@@ -8,7 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import model.Charakter;
+import model.unit.Charakter;
 
 public class UnitView extends MenuViews {
 

@@ -8,6 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import main.Main;
+import model.unit.Charakter;
+import model.unit.Unit;
 
 
 
@@ -65,11 +67,20 @@ public class HibernateFactory {
 		//we can set mapping file or class with annotation
 		//addClass(Employee1.class) will look for resource
 		// com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
+		
 		configuration.addAnnotatedClass(Spieler.class);
 		main.notifyProgress("Loading Spieler Klass");
+		
 		configuration.addAnnotatedClass(Universum.class);
 		main.notifyProgress("Loading Universum Klass");
+		
+		configuration.addAnnotatedClass(Unit.class);
+		main.notifyProgress("Loading Universum Klass");
+		
 		configuration.addAnnotatedClass(Charakter.class);
+		main.notifyProgress("Loading Charakter Klass");
+		
+		configuration.addAnnotatedClass(Ability.class);
 		main.notifyProgress("Loading Charakter Klass");
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
@@ -87,12 +98,16 @@ public class HibernateFactory {
 	}
 
 	public static SessionFactory getSessionFactory() {
-		if(sessionFactory == null) sessionFactory = buildSessionJavaConfigFactory();
+		if(sessionFactory == null) {
+			sessionFactory = buildSessionJavaConfigFactory();
+		}
         return sessionFactory;
     }
 	
 	public static SessionFactory getSessionFactory(Main main) {
-		if(sessionFactory == null) sessionFactory = buildSessionJavaConfigFactory(main);
+		if(sessionFactory == null) {
+			sessionFactory = buildSessionJavaConfigFactory(main);
+		}
         return sessionFactory;
     }
 	

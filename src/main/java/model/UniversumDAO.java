@@ -10,6 +10,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import model.unit.Charakter;
+
 public class UniversumDAO {
 
 	public boolean getUniversums(ArrayList<Universum> loadedUniversums) {

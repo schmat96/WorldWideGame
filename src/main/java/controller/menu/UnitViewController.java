@@ -1,8 +1,8 @@
 package controller.menu;
 
 import constants.LayoutConstants;
-import model.Charakter;
 import model.DataBean;
+import model.unit.Charakter;
 import view.menu.UnitView;
 
 public class UnitViewController extends MainViewsController {

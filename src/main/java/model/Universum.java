@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import model.unit.Charakter;
+
 @Entity
 @Table(name="universum", 
 	   uniqueConstraints={@UniqueConstraint(columnNames={"id_universum"})})

@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import exceptions.NotEnoughMoney;
+import model.unit.Charakter;
 
 public class SpielerDAO {
 

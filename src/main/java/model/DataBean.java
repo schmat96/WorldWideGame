@@ -2,10 +2,13 @@ package model;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Random;
 
 import exceptions.NotEnoughMoney;
 import javafx.stage.Stage;
 import main.Main;
+import model.unit.Charakter;
+import model.unit.CharakterDAO;
 
 public class DataBean {   
 	private Stage primaryStage = null;
@@ -72,8 +75,7 @@ public class DataBean {
 	}
 
 	public void setPrimaryStage(Stage primaryStage2) {
-		 this.primaryStage = primaryStage2;
-		
+		 this.primaryStage = primaryStage2;	
 	}
 
 	public void loadCharakters() {
@@ -124,6 +126,18 @@ public class DataBean {
 			System.out.println(summonedCharakter.getName()+" erhalten!");
 		}
 		
+		return summonedCharakter;
+	}
+
+	public Charakter getRandomUnit(Random rng) {
+		if (universumDAO==null) {
+			universumDAO = new UniversumDAO();
+		}
+		if (loadedUniversums==null) {
+			loadedUniversums = new ArrayList<Universum>();
+			this.loading = universumDAO.getUniversums(loadedUniversums);
+		}
+		Charakter summonedCharakter = universumDAO.getRandomUnitFromUniversum(loadedUniversums.get(rng.nextInt(loadedUniversums.size())));
 		return summonedCharakter;
 	}
 	

@@ -4,6 +4,8 @@ import com.sun.javafx.application.LauncherImpl;
 
 import constants.LayoutConstants;
 import controller.LoginViewController;
+import controller.RegisterViewViewController;
+import controller.fight.MainFightController;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
@@ -12,7 +14,7 @@ import model.DataBean;
 public class Main extends Application {
 	
 	private DataBean dataBean;
-	private int COUNT_LIMIT = 7;
+	private int COUNT_LIMIT = 10;
 	private int progressID = 1;
 	
 	private RandomProgress randomProgress;
@@ -28,6 +30,9 @@ public class Main extends Application {
 		LoginViewController wwg = new LoginViewController(dataBean);
 	    wwg.show(); 
 	    wwg.login("Kevin", "Welcome$18");
+	    MainFightController mfc = new MainFightController(dataBean);
+	    mfc.show();
+	    
 	}
 
 	@Override

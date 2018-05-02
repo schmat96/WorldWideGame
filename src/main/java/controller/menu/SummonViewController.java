@@ -8,9 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import model.Charakter;
 import model.DataBean;
 import model.Universum;
+import model.unit.Charakter;
 import view.menu.SummonView;
 import view.menu.UnitsView;
 
