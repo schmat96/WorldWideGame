@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import constants.LayoutConstants;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.DataBean;
 import model.unit.Charakter;
-import view.menu.MenuViews;
 import view.menu.UnitsView;
+
 
 public class UnitsViewController extends MainViewsController {
 
@@ -63,7 +62,6 @@ class changeToUnit implements EventHandler<MouseEvent> {
 
 class changeFocus implements EventHandler<MouseEvent> {
 
-	private DataBean dataBean;
 	private VBox current;
 
 	public changeFocus(VBox current) {

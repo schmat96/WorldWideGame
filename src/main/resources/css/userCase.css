@@ -1,0 +1,32 @@
+.unitCase, .Button, .ChallengeCase {
+  -fx-background-color: orange;
+  -fx-background-insets: 3px;
+  -fx-background-radius: 10px, 10px, 10px, 10px;
+}
+
+#canMove, #enabled, #markable {
+  -fx-background-color: orange;
+  -fx-cursor: hand;
+}
+
+#canMove:hover, #enabled:hover, #markable:hover {
+	-fx-background-color: #ff7f00;
+}
+
+#dead, #disabled {
+	-fx-background-color: grey;
+}
+
+#endedTurn {
+	-fx-background-color: white;
+}
+
+
+#ability {
+  -fx-background-color: Aquamarine;
+  -fx-cursor: hand;
+}
+
+#ability:hover {
+	-fx-background-color: #6495ED;
+}

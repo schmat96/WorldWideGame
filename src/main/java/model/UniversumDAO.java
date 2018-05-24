@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -62,7 +61,9 @@ public class UniversumDAO {
 			
 			Set<Charakter> allCharakters = uni.getCharakters();
 			ArrayList<Charakter> charakters = new ArrayList<Charakter>(allCharakters);
-			
+			if (charakters.size()==0) {
+				return null;
+			}
 			Random rng = new Random();
 			result = charakters.get(rng.nextInt(charakters.size()));
 

@@ -5,10 +5,13 @@ import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.ServiceRegistry;
 
+import exceptions.DataBaseNotRunningException;
 import main.Main;
 import model.unit.Charakter;
+import model.unit.Enemy;
 import model.unit.Unit;
 
 
@@ -31,9 +34,6 @@ public class HibernateFactory {
 		
 		configuration.setProperties(props);
 		
-		//we can set mapping file or class with annotation
-		//addClass(Employee1.class) will look for resource
-		// com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
 		configuration.addAnnotatedClass(Spieler.class);
 		configuration.addAnnotatedClass(Universum.class);
 		configuration.addAnnotatedClass(Charakter.class);
@@ -51,7 +51,7 @@ public class HibernateFactory {
         }
 	}
 	
-	private static SessionFactory buildSessionJavaConfigFactory(Main main) {
+	private static SessionFactory buildSessionJavaConfigFactory(Main main) throws DataBaseNotRunningException {
     	try {
     	Configuration configuration = new Configuration();
 		
@@ -79,8 +79,20 @@ public class HibernateFactory {
 		
 		configuration.addAnnotatedClass(Charakter.class);
 		main.notifyProgress("Loading Charakter Klass");
+
+		configuration.addAnnotatedClass(Challenge.class);
+		main.notifyProgress("Loading Universum Klass");
+		
+		configuration.addAnnotatedClass(ChallengeTurn.class);
+		main.notifyProgress("Loading Universum Klass");
+		
+		configuration.addAnnotatedClass(Enemy.class);
+		main.notifyProgress("Loading Universum Klass");
 		
 		configuration.addAnnotatedClass(Ability.class);
+		main.notifyProgress("Loading Charakter Klass");
+		
+		configuration.addAnnotatedClass(AttackPattern.class);
 		main.notifyProgress("Loading Charakter Klass");
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
@@ -90,6 +102,9 @@ public class HibernateFactory {
     	main.notifyProgress("Loading Charakter Klass");
     	
         return sessionFactory;
+    	}
+    	catch (JDBCConnectionException e) {
+    		throw new DataBaseNotRunningException(e);
     	}
         catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
@@ -104,7 +119,7 @@ public class HibernateFactory {
         return sessionFactory;
     }
 	
-	public static SessionFactory getSessionFactory(Main main) {
+	public static SessionFactory getSessionFactory(Main main) throws DataBaseNotRunningException {
 		if(sessionFactory == null) {
 			sessionFactory = buildSessionJavaConfigFactory(main);
 		}

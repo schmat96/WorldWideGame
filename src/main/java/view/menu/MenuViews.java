@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Spieler;
@@ -35,16 +34,19 @@ public abstract class MenuViews {
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-
-		hauptGrid.setBottom(footer);
 		hauptGrid.setCenter(grid);
+		hauptGrid.setBottom(footer);
+
 		hauptGrid.setTop(header);
+		
 		setFocusOfButton();
+		
 	}
 	
 	public void show(Stage stage) {
 		stage.setTitle("World Wide Game - Main");
 		stage.setScene(scene);
+		scene.getStylesheets().add("css/userCase.css");
 		stage.show();
 	}
 	

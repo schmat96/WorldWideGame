@@ -3,29 +3,32 @@ package view.fight;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import controller.fight.MainFightController;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.NumbersToDisplay;
 
 public class ShowNumbersThread extends Thread{
     
     private ArrayList<NumbersToDisplay> numbersToDisplay = null;
     private Canvas fightScreen;
+    private boolean running = true;
  
-    public ShowNumbersThread(ArrayList<NumbersToDisplay> numbersToDisplay, Canvas fightScreen) {
-    	this.numbersToDisplay = numbersToDisplay;
+    public ShowNumbersThread(Canvas fightScreen) {
+    	this.numbersToDisplay = MainFightController.getNumbersToDisplay();
     	this.fightScreen = fightScreen;
+    	this.setDaemon(true);
+    	super.setName("ShowNumbersThread");
 	}
  
     @Override
     public void run() {
  
-        while (!this.isInterrupted()) {
-             
+        while (running) {
 
             Platform.runLater(new Runnable() {
-
                 public void run() {
                 	GraphicsContext gc = fightScreen.getGraphicsContext2D();
             		gc.clearRect(0, 0, 300, 200);
@@ -34,9 +37,11 @@ public class ShowNumbersThread extends Thread{
         				Iterator<NumbersToDisplay> iter = numbersToDisplay.iterator();
         				while (iter.hasNext()) {
         					NumbersToDisplay toDisplay = iter.next();
-        					System.out.println(toDisplay.getArt()+":"+toDisplay.getUnit()+":"+toDisplay.getValue());
-        					
-        					gc.strokeText(toDisplay.getValue()+"", 50, toDisplay.getXDisplay());
+        					//System.out.println(toDisplay.getArt()+":"+toDisplay.getUnit()+":"+toDisplay.getValue()+"--"+toDisplay.getXDisplay()+"-"+toDisplay.getYDisplay());
+
+        					Color c = toDisplay.getColor();
+        					gc.setStroke(c);
+        					gc.strokeText(toDisplay.getValue()+"", toDisplay.getXDisplay(), toDisplay.getYDisplay());
         					if (toDisplay.destroy()) {
         						iter.remove();
         					}
@@ -46,9 +51,7 @@ public class ShowNumbersThread extends Thread{
                 }
             });
  
-            // Thread schlafen
             try {
-                // fuer 3 Sekunden
                 sleep(40);
             } catch (InterruptedException ex) {
                 
@@ -57,5 +60,9 @@ public class ShowNumbersThread extends Thread{
  
  
     }
+
+	public void setRunning(boolean b) {
+		this.running = b;
+	}
  
 }

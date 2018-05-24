@@ -1,5 +1,8 @@
 package model;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -8,19 +11,19 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import exceptions.NotEnoughMoney;
+import exceptions.NotEnoughMoneyException;
 import model.unit.Charakter;
 
 public class SpielerDAO {
 
-	public void addMoney(Spieler sp, int money) throws NotEnoughMoney {
+	public void addMoney(Spieler sp, int money) throws NotEnoughMoneyException {
 		Session sess = null;
 		Transaction trx = null;
 		try {
 
 			if (money < 0 && money * -1 > sp.getGeld()) {
 
-				throw new NotEnoughMoney("Nicht genug Geld!");
+				throw new NotEnoughMoneyException("Nicht genug Geld!");
 
 			}
 
@@ -58,17 +61,24 @@ public class SpielerDAO {
 
 			result = (ArrayList<Spieler>) sess.createQuery("from Spieler E WHERE E.name like '" + Name + "'").list();
 			if (result.size() == 1) {
-				if (pw.equals(result.get(0).getPasswort())) {
-					Spieler sp = result.get(0);
-					sess.merge(sp);
-					trx.commit();
-					return result.get(0);
-				}
+				
+					if (Hash.getHash(pw).equals(result.get(0).getPasswort())) {
+						Spieler sp = result.get(0);
+						sess.merge(sp);
+						trx.commit();
+						return result.get(0);
+					}
+					
+				
 				return null;
 			} else {
 				return null;
 			}
-
+		} catch (HashingException e) {
+				
+			e.printStackTrace();
+			return null;
+		
 		} catch (HibernateException ex) {
 			if (trx != null)
 				try {
@@ -110,7 +120,6 @@ public class SpielerDAO {
 			} catch (Exception exCl) {
 			}
 		}
-
 		return result;
 	}
 
@@ -122,12 +131,22 @@ public class SpielerDAO {
 			trx = sess.beginTransaction();
 			Spieler sp = new Spieler();
 			sp.setName(name);
-			sp.setPasswort(passwort);
+			sp.setPasswort(Hash.getHash(passwort));
 			sp.setExp(exp);
 			sp.setGeld(geld);
+			ArrayList<Charakter> charaktersDefault = (ArrayList<Charakter>) sess.createQuery("from Charakter where id<7").list();
+			Iterator<Charakter> iter = charaktersDefault.iterator();
+			while (iter.hasNext()) {
+				sp.charakters.add(iter.next());
+			}
 			sess.save(sp);
 			trx.commit();
 			return sp;
+		}catch (HashingException e) {
+			// TODO Auto-generated catch block
+			sess.close();
+			e.printStackTrace();
+			return null;
 		} catch (HibernateException ex) {
 			if (trx != null)
 				try {
@@ -142,6 +161,7 @@ public class SpielerDAO {
 			} catch (Exception exCl) {
 			}
 		}
+		
 	}
 
 	public void closeSessionFactory() {
@@ -156,7 +176,7 @@ public class SpielerDAO {
 				return null;
 			}
 		}
-		return this.generatePlayer(name, pw, 0, 100);
+		return this.generatePlayer(name, pw, 0, 190);
 	}
 	
 	public boolean playerOwnsCharakter(Spieler spieler, Charakter charakter) {
@@ -205,13 +225,10 @@ public class SpielerDAO {
 			trx = sess.beginTransaction();
 
 			Spieler sp = (Spieler) sess.get(loggedInSpieler.getClass(), loggedInSpieler.getId());
-
 			sp.getCharakters().add(summonedCharakter);
-
-			
 			sess.merge(sp);
 			trx.commit();
-
+		
 		} catch (HibernateException ex) {
 			if (trx != null)
 				try {

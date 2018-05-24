@@ -6,8 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import model.Ability;
+import constants.ModelConstants;
+import controller.fight.MainFightController;
+import model.AbilityArt;
 import model.Buff;
+import model.Elemente;
+import model.NumbersToDisplay;
 
 @MappedSuperclass
 public abstract class Unit {
@@ -90,6 +94,18 @@ public abstract class Unit {
 	@Transient
 	protected ArrayList<Buff> buffs;
 	
+	@Transient
+	private int position = 1;
+	
+	@Transient
+	private double multiplier = 1;
+	
+	@Transient long lastCall = 0;
+	
+	public Unit() {
+		buffs = new ArrayList<Buff>();
+	}
+	
 	protected void outline() {
 		System.out.println(name);
 		System.out.println("------------------Base Stats----------------------");
@@ -99,7 +115,26 @@ public abstract class Unit {
 		System.out.println("");
 	}
 	
-	protected void calculateBuffs() {
+	public void removeBuffs() {
+		this.buffs.clear();
+		this.defCalc = def;
+		this.sprCalc = spr;
+		this.magCalc = mag;
+		this.atkCalc = atk;
+		this.mpCalc = mp;
+		this.blitzResCalc = blitzRes;
+		this.feuerResCalc = feuerRes;
+		this.wasserResCalc = wasserRes;
+		this.windResCalc = windRes;
+		this.eisResCalc = eisRes;
+	}
+	
+	public void addBuff(Buff buff) {
+		this.buffs.add(buff);
+		calculateBuff(buff);
+	}
+	
+	public void calculateBuffs() {
 		Iterator<Buff> iter = buffs.iterator();
 		while (iter.hasNext()) {
 			Buff buff = iter.next();
@@ -142,144 +177,125 @@ public abstract class Unit {
 				}
 				iter.remove();
 			} else {
-				switch (buff.getStat()) {
-				case atk:
-					atkCalc = (int) (atk+(atk*buff.getModifier()));
-					break;
-				case blitzRes:
-					blitzResCalc = (int) (blitzRes+(blitzRes*buff.getModifier()));
-					break;
-				case def:
-					defCalc = (int) (def+(def*buff.getModifier()));
-					break;
-				case eisRes:
-					eisResCalc = (int) (eisRes+(eisRes*buff.getModifier()));
-					break;
-				case feuerRes:
-					feuerRes = (int) (feuerRes+(feuerRes*buff.getModifier()));
-					break;
-				case hp:
-					hpCalc = (int) (hp+(hp*buff.getModifier()));
-					break;
-				case mag:
-					magCalc = (int) (mag+(mag*buff.getModifier()));
-					break;
-				case spr:
-					sprCalc = (int) (spr+(spr*buff.getModifier()));
-					break;
-				case wasserRes:
-					wasserResCalc = (int) (wasserRes+(wasserRes*buff.getModifier()));
-					break;
-				case windRes:
-					windResCalc = (int) (windRes+(windRes*buff.getModifier()));
-					break;
-				default:
-					break;
-
-				}
+				calculateBuff(buff);
 			}
 			
 		}
 	}
 	
-	public void setIsDead(Boolean val) {
-		this.isDead = val;
-	}
 	
-	public Boolean getIsDead() {
-		return this.isDead;
-	}
 	
-	public int getHpCalc() {
-		return hpCalc;
-	}
+	private void calculateBuff(Buff buff) {
+		switch (buff.getStat()) {
+		case atk:
+			atkCalc = (int) (atkCalc+(atk*buff.getModifier()));
+			break;
+		case blitzRes:
+			blitzResCalc = (int) (blitzResCalc+(blitzRes*buff.getModifier()));
+			break;
+		case def:
+			defCalc = (int) (defCalc+(def*buff.getModifier()));
+			break;
+		case eisRes:
+			eisResCalc = (int) (eisResCalc+(eisRes*buff.getModifier()));
+			break;
+		case feuerRes:
+			feuerRes = (int) (feuerRes+(feuerRes*buff.getModifier()));
+			break;
+		case hp:
+			hpCalc = (int) (hpCalc+(hp*buff.getModifier()));
+			break;
+		case mag:
+			magCalc = (int) (magCalc+(mag*buff.getModifier()));
+			break;
+		case spr:
+			sprCalc = (int) (sprCalc+(spr*buff.getModifier()));
+			break;
+		case wasserRes:
+			wasserResCalc = (int) (wasserResCalc+(wasserRes*buff.getModifier()));
+			break;
+		case windRes:
+			windResCalc = (int) (windResCalc+(windRes*buff.getModifier()));
+			break;
+		default:
+			break;
+
+		}
+
 		
-	public int getHp() {
-		return hp;
 	}
 
-	public int getDefCalc() {
-		return defCalc;
-	}
-
-	public int getSprCalc() {
-		return sprCalc;
-	}
-
-	public int getMagCalc() {
-		return magCalc;
-	}
-
-	public int getAtkCalc() {
-		return atkCalc;
-	}
-
-	public int getBlitzResCalc() {
-		return blitzResCalc;
-	}
-
-	public int getFeuerResCalc() {
-		return feuerResCalc;
-	}
-
-	public int getWasserResCalc() {
-		return wasserResCalc;
-	}
-
-	public int getWindResCalc() {
-		return windResCalc;
-	}
-
-	public int getEisResCalc() {
-		return eisResCalc;
-	}
-	public int getMp() {
-		return mp;
-	}
-
-	public void setMp(int mp) {
-		this.mp = mp;
-	}
-
-	public int getMpCalc() {
-		return mpCalc;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	public void setAtk(int atk) {
-		this.atk = atk;
-	}
-	
-	public double getProgressHp() {
-		return (double) this.hpCalc/(double) this.hp;
-	}
-
-	public String getProgressHpString() {
-		return this.hpCalc+"/"+this.hp;
-	}
-	
-	public double getProgressMp() {
-		return (double) this.mpCalc/(double) this.mp;
-	}
-
-	public String getProgressMpString() {
-		return this.mpCalc+"/"+this.mp;
-	}
-	
-	public int losehpPhy(int attackWert, double multiplier) {
-		int attacke = (attackWert-this.def);
+	public void losehpPhy(int attackWert) {
+		
+		if (System.currentTimeMillis()-lastCall<ModelConstants.WAIT_MULTIPLIER) {
+			multiplier = multiplier + 0.5;
+		} else {
+			multiplier = 1;
+		}
+		lastCall = System.currentTimeMillis();
+		
+		int attacke = (int) ((attackWert-this.defCalc)*multiplier);
 		if (attacke<=0) {
 			attacke = 1;
 		}
-		this.hpCalc = (int) (this.hpCalc - ((attacke)*multiplier));
+		this.hpCalc = (int) (this.hpCalc - attacke);
 		if (this.hpCalc<0) {
 			this.hpCalc=0;
+			this.setIsDead(true);
 		}
-		return attacke;
+		
+		if (multiplier>=2) {
+			MainFightController.getNumbersToDisplay().add(new NumbersToDisplay("Chain:"+multiplier,this));
+		}
+		
+		MainFightController.getNumbersToDisplay().add(new NumbersToDisplay(attacke,this, AbilityArt.Angriff));
+
 	}
+	
+public void losehpMag(int attackWert, Elemente ele) {
+		
+		if (System.currentTimeMillis()-lastCall<ModelConstants.WAIT_MULTIPLIER) {
+			multiplier = multiplier + 0.5;
+		} else {
+			multiplier = 1;
+		}
+		lastCall = System.currentTimeMillis();
+		double elementMulti = 1;
+		switch (ele) {
+		case blitz:
+			elementMulti = (this.blitzResCalc+100)/100;
+			break;
+		case eis:
+			elementMulti = (this.eisResCalc+100)/100;
+			break;
+		case feuer:
+			elementMulti = (this.feuerResCalc+100)/100;
+			break;
+		case wasser:
+			elementMulti = (this.wasserResCalc+100)/100;
+			break;
+		case wind:
+			elementMulti = (this.windResCalc+100)/100;
+			break;
+		}
+		int attacke = (int) (((attackWert-this.spr)*multiplier)/elementMulti);
+		if (attacke<=0) {
+			attacke = 1;
+		}
+		this.hpCalc = (int) (this.hpCalc - attacke);
+		if (this.hpCalc<0) {
+			this.hpCalc=0;
+			this.setIsDead(true);
+		}
+		
+		if (multiplier>=2) {
+			MainFightController.getNumbersToDisplay().add(new NumbersToDisplay("Chain:"+multiplier,this));
+		}
+		
+		MainFightController.getNumbersToDisplay().add(new NumbersToDisplay(attacke,this, AbilityArt.Magie));
+
+	}
+	
 	
 	public void getsHealing(int healingWert, double multiplier) {
 		int healing = (int) (healingWert*multiplier);
@@ -288,6 +304,23 @@ public abstract class Unit {
 		if (this.hpCalc>this.hp) {
 			this.hpCalc=this.hp;
 		}
+		MainFightController.getNumbersToDisplay().add(new NumbersToDisplay(healing,this, AbilityArt.Heilung));
+	}
+	
+	public void restoreHPToPercent(double percent) {
+		this.hpCalc = (int) (hp*percent);
+		if (this.hpCalc>this.hp) {
+			this.hpCalc=this.hp;
+		}
+	}
+
+
+	public int getPosition() {
+		return this.position;
+	}
+	
+	public void setPosition(int pos) {
+		this.position = pos;
 	}
 	
 	
@@ -367,6 +400,97 @@ public abstract class Unit {
 	public int getAtk() {
 		return atk;
 	}
+	
+	public void setIsDead(Boolean val) {
+		this.isDead = val;
+	}
+	
+	public Boolean getIsDead() {
+		return this.isDead;
+	}
+	
+	public int getHpCalc() {
+		return hpCalc;
+	}
+		
+	public int getHp() {
+		return hp;
+	}
+
+	public int getDefCalc() {
+		return defCalc;
+	}
+
+	public int getSprCalc() {
+		return sprCalc;
+	}
+
+	public int getMagCalc() {
+		return magCalc;
+	}
+
+	public int getAtkCalc() {
+		return atkCalc;
+	}
+
+	public int getBlitzResCalc() {
+		return blitzResCalc;
+	}
+
+	public int getFeuerResCalc() {
+		return feuerResCalc;
+	}
+
+	public int getWasserResCalc() {
+		return wasserResCalc;
+	}
+
+	public int getWindResCalc() {
+		return windResCalc;
+	}
+
+	public int getEisResCalc() {
+		return eisResCalc;
+	}
+	public int getMp() {
+		return mp;
+	}
+
+	public void setMp(int mp) {
+		this.mp = mp;
+	}
+
+	public int getMpCalc() {
+		return mpCalc;
+	}
+	
+	public String getImageSource() {
+		return this.name.toLowerCase();
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public void setAtk(int atk) {
+		this.atk = atk;
+	}
+	
+	public double getProgressHp() {
+		return (double) this.hpCalc/(double) this.hp;
+	}
+
+	public String getProgressHpString() {
+		return this.hpCalc+"/"+this.hp;
+	}
+	
+	public double getProgressMp() {
+		return (double) this.mpCalc/(double) this.mp;
+	}
+
+	public String getProgressMpString() {
+		return this.mpCalc+"/"+this.mp;
+	}
 
 	public void setCalcAsDefaults() {
 		this.hpCalc = hp;
@@ -375,15 +499,11 @@ public abstract class Unit {
 		this.magCalc = mag;
 		this.atkCalc = atk;
 		this.mpCalc = mp;
-		
+		this.isDead = false;
 		this.blitzResCalc = blitzRes;
 		this.feuerResCalc = feuerRes;
 		this.wasserResCalc = wasserRes;
 		this.windResCalc = windRes;
 		this.eisResCalc = eisRes;
 	}
-
-
-	
-	
 }

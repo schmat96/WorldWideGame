@@ -29,25 +29,17 @@ public class MyPreloader extends Preloader {
     
     private int progressMessageCount = 0;
     
-    private ArrayList<String> progressMessages = LoadingMessagesConstants.LoadingMessagesConstants();
+    private ArrayList<String> progressMessages = LoadingMessagesConstants.getLoadingMessagesConstants();
     Random rng = new Random();
     
 
     public MyPreloader() {
 
-       
+ 
     }
 
     @Override
     public void init() throws Exception {
-        
-    	
-    	
-        // If preloader has complex UI it's initialization can be done in MyPreloader#init
-    	
-    	
-    	
-    	
         Platform.runLater(() -> {
             Label title = new Label("World Wide Game!");
             title.setTextAlignment(TextAlignment.CENTER);
@@ -64,7 +56,7 @@ public class MyPreloader extends Preloader {
 
     private String getRandomMessage() {
     	if (progressMessages.size()==0) {
-    		progressMessages = LoadingMessagesConstants.LoadingMessagesConstants();
+    		progressMessages = LoadingMessagesConstants.getLoadingMessagesConstants();
     	}
     	String msg = progressMessages.remove(rng.nextInt(progressMessages.size()));
     	if (msg == null) {

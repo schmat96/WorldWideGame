@@ -2,10 +2,8 @@ package main;
 
 import com.sun.javafx.application.LauncherImpl;
 
-import constants.LayoutConstants;
+import constants.Performance;
 import controller.LoginViewController;
-import controller.RegisterViewViewController;
-import controller.fight.MainFightController;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
@@ -14,7 +12,7 @@ import model.DataBean;
 public class Main extends Application {
 	
 	private DataBean dataBean;
-	private int COUNT_LIMIT = 10;
+	private int COUNT_LIMIT = 13;
 	private int progressID = 1;
 	
 	private RandomProgress randomProgress;
@@ -30,9 +28,7 @@ public class Main extends Application {
 		LoginViewController wwg = new LoginViewController(dataBean);
 	    wwg.show(); 
 	    wwg.login("Kevin", "Welcome$18");
-	    MainFightController mfc = new MainFightController(dataBean);
-	    mfc.show();
-	    
+	    Performance.logPerformance();
 	}
 
 	@Override
@@ -50,7 +46,6 @@ public class Main extends Application {
 	
 
 	public void notifyProgress(String progressMessage) {
-		
 		double progress = (100 * progressID) / COUNT_LIMIT;
         LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 		progressID++;
@@ -58,12 +53,15 @@ public class Main extends Application {
 	}
 
 	public void notifyFromRandomProgress() {
-		
 		if (100/COUNT_LIMIT*progressID<100/COUNT_LIMIT*(progressID+1)) {
 			COUNT_LIMIT++;
 			notifyProgress("");
-		}
-		
+		}		
+	}
+
+	public void notifyProgressError(String string) {
+		System.exit(1);
+		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(-0.1));
 		
 	}
 }

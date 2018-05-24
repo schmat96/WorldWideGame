@@ -7,6 +7,11 @@ import javafx.event.EventHandler;
 import model.DataBean;
 import view.LoginView;
 
+/**
+ * Controller for {@link LoginView LoginView.Class}
+ * @author schmidmath
+ *
+ */
 public class LoginViewController {
 
 	private LoginView mainView;
@@ -17,15 +22,21 @@ public class LoginViewController {
 		this.dataBean = dataBean;
 		this.mainView = new LoginView(LayoutConstants.DIMENSION);
 		this.addListener();
-
-		// this.dataBean.getGetData().closeSessionFactory();
 	}
 
+	/**
+	 * Add the Listener for the 2 Buttons
+	 */
 	protected void addListener() {
 		this.mainView.getBtnLogin().setOnAction(new loginListener());
 		this.mainView.getRegister().setOnAction(new registerListener());
 	}
-
+	
+	/**
+	 * Tries to log in.
+	 * @param name
+	 * @param pw
+	 */
 	public void login(String name, String pw) {
 		if (dataBean.login(name, pw)) {
 			HomeViewController mainWindow = new HomeViewController(dataBean);

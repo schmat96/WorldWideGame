@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import constants.LayoutConstants;
+import exceptions.NotEnoughMoneyException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import model.DataBean;
 import model.Universum;
 import model.unit.Charakter;
 import view.menu.SummonView;
-import view.menu.UnitsView;
 
 public class SummonViewController extends MainViewsController {
 
@@ -58,14 +57,19 @@ public class SummonViewController extends MainViewsController {
 		}
 
 		public void handle(ActionEvent event) {
-			Charakter character = dataBean.summonUnit(this.universum);
-			if (character == null) {
-				
-			} else {
-				UnitViewController unitsView = new UnitViewController(this.dataBean, character);
-				unitsView.show();
+			Charakter character;
+			try {
+				character = dataBean.summonUnit(this.universum);
+			} catch (NotEnoughMoneyException e) {
+				((SummonView) view).addHinweis("nicht genug Geld!");
+				return;
 			}
-			
+			if (character == null) {
+				((SummonView) view).crystalView(LayoutConstants.DIMENSION, character);
+			} else {
+				((SummonView) view).crystalView(LayoutConstants.DIMENSION, character);
+			}
+			view.setData(dataBean.getLoggedInSpieler());
 		}
 	}
 

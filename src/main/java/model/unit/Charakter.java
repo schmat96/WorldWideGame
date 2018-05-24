@@ -31,8 +31,6 @@ public class Charakter extends Unit {
 	@Column(name="id", nullable=false, unique=true, length=11)
 	private int id;
 	
-
-	
 	@ManyToMany(mappedBy = "charakters")
     private Set<Spieler> spieler = new HashSet<>();
 	
@@ -53,8 +51,10 @@ public class Charakter extends Unit {
 	
 	@Transient
 	private Boolean endTurn;
-
 	
+	public String getImageSource() {
+		return this.name.toLowerCase();
+	}
 
 	public Ability getChoosenAbility() {
 		return choosenAbility;
@@ -89,6 +89,17 @@ public class Charakter extends Unit {
 	}
 	public Universum getUniversum() {
 		return universum;
+	}
+
+	public void lostmp(int mana) {
+		this.mpCalc = this.mpCalc - mana;
+	}
+	
+	public boolean enoughMana(int mana) {
+		if (this.mpCalc>=mana) {
+			return true;
+		}
+		return false;
 	}
 
 }

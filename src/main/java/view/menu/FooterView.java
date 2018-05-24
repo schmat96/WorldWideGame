@@ -40,7 +40,7 @@ public class FooterView extends GridPane {
 		buttons[2] = createButton(summonButton);
 		this.add(buttons[2], 2, 0);
 		
-		specialButton = new Button("Special");
+		specialButton = new Button("Fight");
 		buttons[3] = createButton(specialButton);
 		this.add(buttons[3], 3, 0);
 		

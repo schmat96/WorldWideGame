@@ -1,20 +1,16 @@
 package view.fight;
 
+import constants.CharacterStates;
+import constants.ImagesPreloader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.unit.Charakter;
-
-import java.net.URL;
-import java.net.URLClassLoader;
 
 public class UnitCase extends Case {
 
@@ -25,14 +21,15 @@ public class UnitCase extends Case {
 	private final ProgressBar pb;
 	private final ProgressBar mpProgress;
 	
+	private Pane abilityIcon;
+	
+	private Pane cancel;
+	
 	public UnitCase(BorderPane grid, Charakter charakter) {
 		super(grid);
 
 		this.charakter = charakter;
-		this.getStyleClass().add("unitCase");
 		
-        Image image = new Image("resources/fire.jpg", 30, 30, false, false);
-        
         Label name = new Label();
 
         name.setText(charakter.getName());
@@ -42,7 +39,7 @@ public class UnitCase extends Case {
         VBox vBoxHP = new VBox();
         VBox vBoxMP = new VBox();
         
-        iconHbox.getChildren().add(new ImageView(image));
+        iconHbox.getChildren().add(ImagesPreloader.getCharakterImages(charakter, CharacterStates.alive));
         iconHbox.getChildren().add(name);
 		
 		pb = new ProgressBar(0);
@@ -72,19 +69,18 @@ public class UnitCase extends Case {
         this.add(vBoxMP,2,1,2,1);
 	}
 
-	private void updateMPLabel() {
+	void updateMPLabel() {
 		mpText.setText(charakter.getProgressMpString());
 		mpProgress.setProgress(charakter.getProgressMp());
 	}
 	
-	private void updateHPLabel() {
+	void updateHPLabel() {
 		hp.setText(charakter.getProgressHpString());
 		pb.setProgress(charakter.getProgressHp());
 	}
 
 	public void setOwnStyle(UnitCaseMarks endedTurn) {
 		switch (endedTurn) {
-		
 		case canMove:
 			this.setId("canMove");
 			break;
@@ -109,39 +105,43 @@ public class UnitCase extends Case {
 	}
 
 	private void addSkillImage() {
-		String pfad="";
-		switch (this.charakter.getChoosenAbility().getAbilityArt()) {
-		case Angriff:
-			pfad="angriff.png";
-			break;
-		case BuffEinzeln:
-			pfad="buff.png";
-			break;
-		case BuffGegner:
-			break;
-		case BuffGruppe:
-			pfad="buff.png";
-			break;
-		case BuffSelf:
-			pfad="buff.png";
-			break;
-		case Defense:
-			pfad="Defense.png";
-			break;
-		case Heilung:
-			pfad="heilung.png";
-			break;
-		case Raise:
-			pfad="heilung.png";
-			break;
-		default:
-			pfad="fire.jpg";
-			break;
-		
+
+		if (abilityIcon == null) {
+			abilityIcon = new Pane(ImagesPreloader.getAbilityArtImages(this.charakter.getChoosenAbility().getAbilityArt()));
+		} else {
+			abilityIcon.getChildren().clear();
+			abilityIcon.getChildren().add(ImagesPreloader.getAbilityArtImages( this.charakter.getChoosenAbility().getAbilityArt()));
+			iconHbox.getChildren().remove(abilityIcon);	
 		}
-		
-		Image image = new Image("resources/"+pfad, 30, 30, false, false);
-		iconHbox.getChildren().add(new ImageView(image));
-		
+		abilityIcon.setId("markable");
+		iconHbox.getChildren().add(abilityIcon);
 	}
+
+	public Pane setCancelAbilityButton() {
+		if (cancel == null) {
+			cancel = new Pane();
+	        Image image = new Image("icons/"+"/cancel.png", 30, 30, false, true);
+	        cancel.getChildren().add(new ImageView(image));
+	        cancel.setId("markable");
+		}
+		iconHbox.getChildren().add(cancel);
+        return cancel;
+	}
+	
+	public void removeCancel() {
+		if (cancel != null) {
+			iconHbox.getChildren().remove(cancel);
+		}
+	}
+	
+	public Pane getAbilityIcon() {
+		return this.abilityIcon;
+	}
+	
+	public void removeAbilityIcon() {
+		if (abilityIcon != null) {
+			abilityIcon.getChildren().clear();
+		}
+	}
+	
 }

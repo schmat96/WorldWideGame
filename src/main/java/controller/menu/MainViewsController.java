@@ -16,7 +16,6 @@ public abstract class MainViewsController {
 	}
 
 	public void show() {
-		// View mit Daten befuellen
 		view.setData(dataBean.getLoggedInSpieler());
 		view.show(dataBean.getPrimaryStage());
 	}
@@ -25,6 +24,7 @@ public abstract class MainViewsController {
 		view.getFooter().getUnitButton().setOnAction(new changeToUnits(dataBean));
 		view.getFooter().getHomeButton().setOnAction(new changeToHome(dataBean));
 		view.getFooter().getSummonButton().setOnAction(new changeToSummon(dataBean));
+		view.getFooter().getSpecialButton().setOnAction(new changeToSpecial(dataBean));
 	}
 }
 
@@ -55,6 +55,21 @@ class changeToHome implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent event) {
 		HomeViewController backVC = new HomeViewController(this.dataBean);
 		backVC.show();
+	}
+}
+
+class changeToSpecial implements EventHandler<ActionEvent> {
+
+	private DataBean dataBean;
+
+	public changeToSpecial(DataBean dataBean) {
+		super();
+		this.dataBean = dataBean;
+	}
+
+	public void handle(ActionEvent event) {
+		  ChooseViewController mfc = new ChooseViewController(dataBean);
+		  mfc.show();    
 	}
 }
 
